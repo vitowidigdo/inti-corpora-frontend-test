@@ -6,6 +6,9 @@ const globalSlice = createSlice({
     posts: [],
     users: [],
     comments: [],
+    pieChart: [],
+    lineChart: [],
+    barChart: [],
   },
   reducers: {
     userPost: (state, { payload }) => {
@@ -16,6 +19,15 @@ const globalSlice = createSlice({
     },
     userComments: (state, { payload }) => {
       state.comments = payload;
+    },
+    userPieCharts: (state, { payload }) => {
+      state.pieChart = payload;
+    },
+    userLineCharts: (state, { payload }) => {
+      state.lineChart = payload;
+    },
+    userBarCharts: (state, { payload }) => {
+      state.barChart = payload;
     },
   },
 });

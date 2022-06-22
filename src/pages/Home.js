@@ -7,10 +7,29 @@ import { actionsGlobal } from "../redux/global";
 
 import Header from "components/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
+import PieChart from "components/PieChart";
+import BarChart from "components/BarChart";
+import LineChart from "components/LineChart";
 
 function Home() {
   const dispatch = useDispatch();
   const { users } = useSelector((state) => state.global);
+
+  async function getPieChart() {
+    const url = endpoint.comments;
+    try {
+      fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      })
+        .then((response) => response.json())
+        .then((json) => dispatch(actionsGlobal.userPieCharts(json)));
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   async function getUsers() {
     const url = endpoint.users;
@@ -30,6 +49,7 @@ function Home() {
 
   React.useEffect(() => {
     getUsers();
+    getPieChart();
   }, []);
 
   return (
@@ -82,6 +102,11 @@ function Home() {
           })}
         </tbody>
       </Table>
+      <Container>
+        <PieChart></PieChart>
+        <BarChart></BarChart>
+        <LineChart></LineChart>
+      </Container>
     </Container>
   );
 }

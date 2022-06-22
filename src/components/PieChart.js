@@ -1,102 +1,52 @@
 import React from "react";
-import * as am4core from "@amcharts/amcharts4/core";
-import * as am4charts from "@amcharts/amcharts4/charts";
-import am4themes_animated from "@amcharts/amcharts4/themes/animated";
-import classNames from "classnames";
+// import classNames from "classnames";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Pie } from "react-chartjs-2";
 
-am4core.useTheme(am4themes_animated);
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function PieChart(props) {
-  const chart = React.useRef(null);
-
-  const { data, options, activeIndex, onChange, terdaftarDiSikap } = props;
-
-  const classDataYear =
-    "flex flex-1 flex-col font-montserrat font-medium text-xs";
-
-  const trueTerdaftarDiSikap = terdaftarDiSikap?.map((data) => data)?.[
-    activeIndex
-  ];
-
-  React.useLayoutEffect(() => {
-    let x = am4core.create("terdaftar-sikap", am4charts.PieChart3D);
-
-    chart.current = x;
-    x.hiddenState.properties.opacity = 0;
-    x.data = trueTerdaftarDiSikap?.data?.map((_item) => ({
-      category: _item.name,
-      value: _item.value,
-      // color: am4core.color('#DE1B51'),
-    }));
-
-    x.legend = new am4charts.Legend();
-    x.innerRadius = 100;
-    x.tooltip.label.wrap = true;
-
-    let series = x.series.push(new am4charts.PieSeries3D());
-    series.slices.template.propertyFields.fill = "color";
-    series.dataFields.value = "value";
-    series.dataFields.category = "category";
-    series.alignLabels = false;
-    series.colors.list = [am4core.color("#88c46d"), am4core.color("#6696d0")];
-
-    series.ticks.template.events.on("ready", hideSmall);
-    series.ticks.template.events.on("visibilitychanged", hideSmall);
-    series.labels.template.events.on("ready", hideSmall);
-    series.labels.template.events.on("visibilitychanged", hideSmall);
-
-    function hideSmall(ev) {
-      if (ev.target.dataItem && ev.target.dataItem.values.value.percent === 0) {
-        ev.target.hide();
-      } else {
-        ev.target.show();
-      }
-    }
-    return () => {
-      x.dispose();
-    };
-  }, [trueTerdaftarDiSikap]);
+  const data = {
+    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+    datasets: [
+      {
+        label: "# of Votes",
+        data: [12, 19, 3, 5, 2, 3],
+        backgroundColor: [
+          "rgba(255, 99, 132, 0.2)",
+          "rgba(54, 162, 235, 0.2)",
+          "rgba(255, 206, 86, 0.2)",
+          "rgba(75, 192, 192, 0.2)",
+          "rgba(153, 102, 255, 0.2)",
+          "rgba(255, 159, 64, 0.2)",
+        ],
+        borderColor: [
+          "rgba(255, 99, 132, 1)",
+          "rgba(54, 162, 235, 1)",
+          "rgba(255, 206, 86, 1)",
+          "rgba(75, 192, 192, 1)",
+          "rgba(153, 102, 255, 1)",
+          "rgba(255, 159, 64, 1)",
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
 
   return (
-    <div className="w-full">
+    <>
       <div
-        className="w-full rounded border-border-on-pink mt-2"
         style={{
-          boxShadow:
-            "0px 3px 6px -4px rgba(0, 0, 0, 0.12), 0px 6px 16px rgba(0, 0, 0, 0.08), 0px 9px 28px 8px rgba(0, 0, 0, 0.05)",
+          position: "static",
+          height: "43vh",
+          width: "20vw",
+          justifySelf: "center",
+          display: "flex",
         }}
       >
-        <div className="mx-auto flex flex-col items-center">
-          <div className="font-montserrat font-medium text-black-2 text-sm pt-4 pb-3">
-            Status Terdaftar di SIKaP
-          </div>
-          <div
-            id="terdaftar-sikap"
-            style={{ width: "100%", height: 400 }}
-          ></div>
-        </div>
-
-        <div className="flex flex-row justify-between mt-4">
-          {terdaftarDiSikap?.map((option, index) => (
-            <div
-              key={index}
-              className={classNames(classDataYear, "px-4 py-2", {
-                "text-pink-header": activeIndex === index,
-                "text-black-2": activeIndex !== index,
-              })}
-              onClick={() => onChange(index)}
-              component="button"
-              sx={{
-                bgcolor: activeIndex === index ? "grey.300" : "grey.400",
-              }}
-            >
-              <p className="text-lg font-semibold">{option?.year}</p>
-              <p className="text-sm">{option?.count}</p>
-            </div>
-          ))}
-        </div>
-        <div className="flex justify-between w-full items-center pt-5 px-4 mb-6 pb-2"></div>
+        {" "}
+        <Pie data={data} options={{ maintainAspectRatio: true }} />{" "}
       </div>
-    </div>
+    </>
   );
 }
