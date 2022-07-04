@@ -1,5 +1,6 @@
 export const api = `https://jsonplaceholder.typicode.com`;
 export const apiChart = `https://dummy.restapiexample.com/api/v1/employees`;
+export const apiTest = `https://my-json-server.typicode.com/arif2fast/testRest/cifAccount`;
 
 const endpoint = {
   posts: `${api}/posts`,
@@ -19,6 +20,8 @@ const endpoint = {
   pieChart: `${apiChart}`,
 
   lineChart: `${apiChart}`,
+
+  test: `${apiTest}`,
 };
 
 export default endpoint;

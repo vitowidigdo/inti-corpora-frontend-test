@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Navbar, Nav, Container } from "react-bootstrap";
-// import { Link } from "react-router-dom";
+import { Navbar, Nav, Container, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 
 function Header() {
@@ -49,6 +49,9 @@ function Header() {
       <Navbar bg="light" expand="lg">
         <Container>
           <Navbar.Brand href="/">Inti Corpora</Navbar.Brand>
+          <Link variant="primary" to="/test">
+            New Project Test
+          </Link>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto"></Nav>

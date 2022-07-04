@@ -9,6 +9,8 @@ import Albums from "components/Albums";
 import PageNotFound from "./pages/Home";
 import Comments from "components/Comments";
 
+import Test from "./pages/Test";
+
 function App() {
   const location = useLocation();
 
@@ -22,6 +24,8 @@ function App() {
     <>
       <Routes>
         <Route exact path="/" element={<Home />}></Route>
+
+        <Route exact path="/test" element={<Test />}></Route>
 
         <Route exact path="/posts/" element={<Posts />}></Route>
         <Route exact path="/posts/:id" element={<Posts />}></Route>
